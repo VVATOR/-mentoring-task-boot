@@ -5,7 +5,8 @@
 
 <!DOCTYPE html>
 <head>
-<link rel="stylesheet" href="<spring:theme code='stylesheet'/>" type="text/css" />
+
+<link rel="stylesheet" href="<@spring.theme 'stylesheet'/>" type="text/css" />
 </head>
 <body>
 <a href="?lang=en"><@spring.message 'label.lang.en' /></a>
@@ -16,8 +17,8 @@
 <a href="?theme=dark"><@spring.message 'label.theme_two' /></a>
 
 <h1><@spring.message 'label.welcome' /></h1>
-<a href="<@spring.url '/mvc/users'/>"><@spring.message 'label.users_list' /></a><br>
-  <a href="<@spring.url '/mvc/friendships'/>"><@spring.message 'label.friendships_list' /></a>
+<a href="<@spring.url '/users'/>"><@spring.message 'label.users_list' /></a><br>
+  <a href="<@spring.url '/friendships'/>"><@spring.message 'label.friendships_list' /></a>
 
 
 

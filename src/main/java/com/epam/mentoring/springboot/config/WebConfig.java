@@ -2,9 +2,8 @@ package com.epam.mentoring.springboot.config;
 
 import com.epam.mentoring.springboot.services.SocialNetworkService;
 import com.epam.mentoring.springboot.services.impl.DefaultSocialNetworkServiceImpl;
-import freemarker.template.utility.XmlEscape;
-import java.util.HashMap;
-import java.util.Map;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+import java.beans.PropertyVetoException;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -26,7 +25,6 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.theme.CookieThemeResolver;
 import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 @Configuration
 @PropertySource(value = {"classpath:jdbc.properties"})
@@ -49,16 +47,46 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     return new CookieLocaleResolver();
   }
 
-  @Bean
+  /*@Bean
   public DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
     dataSource.setDriverClassName(env.getRequiredProperty("jdbc.driverClassName"));
     dataSource.setUrl(env.getRequiredProperty("jdbc.url"));
     dataSource.setUsername(env.getRequiredProperty("jdbc.username"));
     dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
+    ComboPooledDataSource c3po = new ComboPooledDataSource();
+
+    return dataSource;
+  }*/
+  @Bean
+  public ComboPooledDataSource dataSource() {
+    // a named datasource is best practice for later jmx monitoring
+    ComboPooledDataSource dataSource = new ComboPooledDataSource("jupiter");
+    final String DB_DRIVER  = env.getRequiredProperty("jdbc.driverClassName");
+    final String DB_URL  = env.getRequiredProperty("jdbc.url");
+    final String DB_USERNAME  = env.getRequiredProperty("jdbc.username");
+    final String DB_PASSWORD  = env.getRequiredProperty("jdbc.password");
+
+    final String CONN_POOL_MIN_SIZE  = env.getRequiredProperty("c3po.db_conn_pool_min_size");
+    final String CONN_POOL_MAX_SIZE  = env.getRequiredProperty("c3po.conn_pool_max_size");
+    final String CONN_POOL_IDLE_PERIOD  = env.getRequiredProperty("c3po.conn_pool_idle_period");
+
+
+    try {
+      dataSource.setDriverClass(DB_DRIVER);
+    } catch (PropertyVetoException pve){
+      System.out.println("Cannot load datasource driver (" + DB_DRIVER +") : " + pve.getMessage());
+      return null;
+    }
+    dataSource.setJdbcUrl(DB_URL);
+    dataSource.setUser(DB_USERNAME);
+    dataSource.setPassword(DB_PASSWORD);
+    dataSource.setMinPoolSize(Integer.parseInt(CONN_POOL_MIN_SIZE));
+    dataSource.setMaxPoolSize(Integer.parseInt(CONN_POOL_MAX_SIZE));
+    dataSource.setMaxIdleTime(Integer.parseInt(CONN_POOL_IDLE_PERIOD));
+
     return dataSource;
   }
-
   @Bean
   public JdbcTemplate jdbcTemplate(DataSource dataSource) {
     JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);

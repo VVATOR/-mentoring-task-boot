@@ -25,15 +25,15 @@
             <tbody>
                 <#list users as user>
                     <tr>
-                        <td><a href="<@spring.url '/mvc/users/${user.id}'/>">${user.name}</a></td>
+                        <td><a href="<@spring.url '/users/${user.id}'/>">${user.name}</a></td>
                         <td>${user.surname}</td>
                         <td>${user.birth}</td>
-                        <td><a href="<@spring.url '/mvc/users/edit_user/${user.id}'/>"><@spring.message 'label.edit' /></a></td>
-                        <td><a href="<@spring.url '/mvc/users/remove/${user.id}'/>"><@spring.message 'label.remove' /></a></td>
+                        <td><a href="<@spring.url '/users/edit_user/${user.id}'/>"><@spring.message 'label.edit' /></a></td>
+                        <td><a href="<@spring.url '/users/remove/${user.id}'/>"><@spring.message 'label.remove' /></a></td>
                     </tr>
                 </#list>
             </tbody>
         </table>
-        <a href="<@spring.url '/mvc/users/edit_user'/>"><@spring.message 'label.user_add' /></a>
+        <a href="<@spring.url '/users/edit_user'/>"><@spring.message 'label.user_add' /></a>
     </body>
 </html>

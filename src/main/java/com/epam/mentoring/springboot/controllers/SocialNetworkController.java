@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/mvc")
+@RequestMapping("/")
 public class SocialNetworkController {
 
     @Resource
@@ -60,7 +60,7 @@ public class SocialNetworkController {
     @RequestMapping(value = "/users/remove/{id}", method = RequestMethod.GET)
     public ModelAndView removeUser(@PathVariable("id") final int id, ModelMap model) {
         socialNetworkService.removeUser(id);
-        return new ModelAndView("forward:/mvc/users", model);
+        return new ModelAndView("forward:/users", model);
     }
 
     @RequestMapping(value = "/users/edit_user", method = RequestMethod.GET)
@@ -86,14 +86,14 @@ public class SocialNetworkController {
             return "userPage";
         }
         socialNetworkService.addUser(user);
-        return "redirect:/mvc/users";
+        return "redirect:/users";
     }
 
     @RequestMapping(value = "/users/edit_user/edit_current_user", method = RequestMethod.POST)
     public String editUser(@ModelAttribute("userForm") User user) {
         System.out.println(user);
         socialNetworkService.editUser(user);
-        return "redirect:/mvc/users";
+        return "redirect:/users";
     }
 
 
