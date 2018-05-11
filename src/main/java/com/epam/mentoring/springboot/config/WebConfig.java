@@ -2,6 +2,9 @@ package com.epam.mentoring.springboot.config;
 
 import com.epam.mentoring.springboot.services.SocialNetworkService;
 import com.epam.mentoring.springboot.services.impl.DefaultSocialNetworkServiceImpl;
+import freemarker.template.utility.XmlEscape;
+import java.util.HashMap;
+import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -23,6 +26,7 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.theme.CookieThemeResolver;
 import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 @Configuration
 @PropertySource(value = {"classpath:jdbc.properties"})
@@ -30,6 +34,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
   @Autowired
   private Environment env;
+
 
   @Bean("messageSource")
   public MessageSource messageSource() {
