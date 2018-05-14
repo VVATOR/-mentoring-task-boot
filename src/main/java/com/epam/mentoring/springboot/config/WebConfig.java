@@ -50,11 +50,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     final String DB_URL  = env.getRequiredProperty("jdbc.url");
     final String DB_USERNAME  = env.getRequiredProperty("jdbc.username");
     final String DB_PASSWORD  = env.getRequiredProperty("jdbc.password");
-
     final String CONN_POOL_MIN_SIZE  = env.getRequiredProperty("c3po.db_conn_pool_min_size");
     final String CONN_POOL_MAX_SIZE  = env.getRequiredProperty("c3po.conn_pool_max_size");
     final String CONN_POOL_IDLE_PERIOD  = env.getRequiredProperty("c3po.conn_pool_idle_period");
-
     try {
       dataSource.setDriverClass(DB_DRIVER);
     } catch (PropertyVetoException pve){
@@ -67,7 +65,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     dataSource.setMinPoolSize(Integer.parseInt(CONN_POOL_MIN_SIZE));
     dataSource.setMaxPoolSize(Integer.parseInt(CONN_POOL_MAX_SIZE));
     dataSource.setMaxIdleTime(Integer.parseInt(CONN_POOL_IDLE_PERIOD));
-
     return dataSource;
   }
   @Bean
@@ -75,16 +72,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
     jdbcTemplate.setResultsMapCaseInsensitive(true);
     return jdbcTemplate;
-  }
-
-  @Bean
-  public SimpleJdbcInsert simpleJdbcInsert(DataSource dataSource) {
-    return new SimpleJdbcInsert(dataSource).withTableName("users");
-  }
-
-  @Bean
-  public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource) {
-    return new NamedParameterJdbcTemplate(dataSource);
   }
 
   @Bean
