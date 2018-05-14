@@ -12,7 +12,7 @@
     <body>
     <#if users??>
         <#assign i = users?size>
-        Count users: ${i}
+        <@spring.message 'label.count' /> users: ${i}
 
         <table>
             <thead>

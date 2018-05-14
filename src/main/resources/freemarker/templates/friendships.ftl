@@ -13,7 +13,7 @@
         <h1><@spring.message 'label.friendships' /></h1>
         <#if friendships??>
             <#assign i = friendships?size>
-            Count friendships: ${i}
+            <@spring.message 'label.count' /> friendships: ${i}
             <table>
                 <thead>
                     <tr>
@@ -32,6 +32,6 @@
                     </#list>
                 </tbody>
             </table>
-        <#else>not found friendships</#if>
+
     </body>
 </html>
