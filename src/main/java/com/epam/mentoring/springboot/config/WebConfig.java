@@ -30,7 +30,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
   @Autowired
   private Environment env;
 
-
   @Bean("messageSource")
   public MessageSource messageSource() {
     ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
@@ -44,20 +43,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     return new CookieLocaleResolver();
   }
 
-  /*@Bean
-  public DataSource dataSource() {
-    DriverManagerDataSource dataSource = new DriverManagerDataSource();
-    dataSource.setDriverClassName(env.getRequiredProperty("jdbc.driverClassName"));
-    dataSource.setUrl(env.getRequiredProperty("jdbc.url"));
-    dataSource.setUsername(env.getRequiredProperty("jdbc.username"));
-    dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
-    ComboPooledDataSource c3po = new ComboPooledDataSource();
-
-    return dataSource;
-  }*/
   @Bean
   public ComboPooledDataSource dataSource() {
-    // a named datasource is best practice for later jmx monitoring
     ComboPooledDataSource dataSource = new ComboPooledDataSource("jupiter");
     final String DB_DRIVER  = env.getRequiredProperty("jdbc.driverClassName");
     final String DB_URL  = env.getRequiredProperty("jdbc.url");
@@ -67,7 +54,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     final String CONN_POOL_MIN_SIZE  = env.getRequiredProperty("c3po.db_conn_pool_min_size");
     final String CONN_POOL_MAX_SIZE  = env.getRequiredProperty("c3po.conn_pool_max_size");
     final String CONN_POOL_IDLE_PERIOD  = env.getRequiredProperty("c3po.conn_pool_idle_period");
-
 
     try {
       dataSource.setDriverClass(DB_DRIVER);
@@ -101,11 +87,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     return new NamedParameterJdbcTemplate(dataSource);
   }
 
- /* @Bean
-  public SocialNetworkService socialNetworkService() {
-    return new DefaultSocialNetworkServiceImpl();
-  }
-*/
   @Bean
   public CookieThemeResolver themeResolver() {
     CookieThemeResolver resolver = new CookieThemeResolver();
@@ -141,5 +122,4 @@ public class WebConfig extends WebMvcConfigurerAdapter {
   public void addResourceHandlers(final ResourceHandlerRegistry registry) {
     registry.addResourceHandler("/themes/**").addResourceLocations("/themes/");
   }
-
 }
