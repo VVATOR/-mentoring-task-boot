@@ -1,6 +1,6 @@
 package com.epam.mentoring.springboot.services;
 
-import com.epam.mentoring.springboot.beans.FriendShips;
+import com.epam.mentoring.springboot.beans.Friendships;
 import com.epam.mentoring.springboot.beans.User;
 import java.util.List;
 
@@ -12,9 +12,9 @@ public interface SocialNetworkService {
 
   void editUser(final User user);
 
-  List<FriendShips> getUserFriendShips(final int userId);
+  List<Friendships> getUserFriendShips(final int userId);
 
-  List<FriendShips> getAllFriendShips();
+  List<Friendships> getAllFriendShips();
 
   void removeUser(final int userId);
 

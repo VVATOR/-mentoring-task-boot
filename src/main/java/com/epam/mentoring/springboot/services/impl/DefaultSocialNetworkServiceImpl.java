@@ -1,6 +1,6 @@
 package com.epam.mentoring.springboot.services.impl;
 
-import com.epam.mentoring.springboot.beans.FriendShips;
+import com.epam.mentoring.springboot.beans.Friendships;
 import com.epam.mentoring.springboot.beans.User;
 import com.epam.mentoring.springboot.services.SocialNetworkService;
 import java.sql.Types;
@@ -27,28 +27,28 @@ public class DefaultSocialNetworkServiceImpl implements SocialNetworkService {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private static final RowMapper usersRowMapper = (rs, rowNumber) -> new User(
-            rs.getInt("id"),
+            rs.getLong("id"),
             rs.getString("name"),
             rs.getString("surname"),
-            rs.getDate("birthdate")
+            rs.getDate("birth")
     );
 
-    private static final RowMapper friendshipsRowMapper = (rs, rowNumber) -> new FriendShips(
-            rs.getInt("userid1"),
-            rs.getInt("userid2"),
+    private static final RowMapper friendshipsRowMapper = (rs, rowNumber) -> new Friendships(
+            rs.getLong("userid1"),
+            rs.getLong("userid2"),
             rs.getTimestamp("timestamp")
     );
 
     @Override
     public List<User> getUsers() {
-        return jdbcTemplate.query("Select * FROM users", usersRowMapper);
+        return jdbcTemplate.query("Select * FROM user", usersRowMapper);
     }
 
     @Override
     public User getUser(final int id) {
         SqlParameterSource namedParameters = new MapSqlParameterSource("id", id);
         List<User> users =
-                namedParameterJdbcTemplate.query("Select * FROM users WHERE id=:id", namedParameters, usersRowMapper);
+                namedParameterJdbcTemplate.query("Select * FROM user WHERE id=:id", namedParameters, usersRowMapper);
         System.out.println(users.get(0));
         return users.isEmpty() ? new User() : users.get(0);
     }
@@ -59,19 +59,19 @@ public class DefaultSocialNetworkServiceImpl implements SocialNetworkService {
                 {user.getName(), user.getSurname(), new java.sql.Date(user.getBirth().getTime()), user.getId()};
         int[] types = {Types.VARCHAR, Types.VARCHAR, Types.DATE, Types.BIGINT};
         int rows = jdbcTemplate
-                .update("UPDATE users SET name = ?, surname = ?, birthDate = ? WHERE id = ?", params, types);
+                .update("UPDATE user SET name = ?, surname = ?, birth = ? WHERE id = ?", params, types);
         System.out.println(rows + " row(s) updated.");
     }
 
     @Override
-    public List<FriendShips> getUserFriendShips(int userId) {
+    public List<Friendships> getUserFriendShips(int userId) {
         SqlParameterSource namedParameters = new MapSqlParameterSource("id", userId);
         return namedParameterJdbcTemplate
                 .query("Select * FROM friendships WHERE userid1=:id", namedParameters, friendshipsRowMapper);
     }
 
     @Override
-    public List<FriendShips> getAllFriendShips() {
+    public List<Friendships> getAllFriendShips() {
         return jdbcTemplate.query("Select * FROM friendships", friendshipsRowMapper);
     }
 
@@ -81,7 +81,7 @@ public class DefaultSocialNetworkServiceImpl implements SocialNetworkService {
         int[] types = {Types.BIGINT};
         jdbcTemplate.execute("SET FOREIGN_KEY_CHECKS=0;");
         jdbcTemplate.update("Delete From friendships Where userId1=?", params, types);
-        jdbcTemplate.update("Delete From users Where id=?", params, types);
+        jdbcTemplate.update("Delete From user Where id=?", params, types);
         jdbcTemplate.execute("SET FOREIGN_KEY_CHECKS=1;");
     }
 
@@ -89,7 +89,7 @@ public class DefaultSocialNetworkServiceImpl implements SocialNetworkService {
     public void addUser(User user) {
         Object[] params = {user.getName(), user.getSurname(), new java.sql.Date(user.getBirth().getTime())};
         int[] types = {Types.VARCHAR, Types.VARCHAR, Types.DATE};
-        jdbcTemplate.update("Insert Into users (name, surname, birthdate) Values (?,?,?)", params, types);
+        jdbcTemplate.update("Insert Into user (name, surname, birth) Values (?,?,?)", params, types);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class DefaultSocialNetworkServiceImpl implements SocialNetworkService {
         for (int i = 0; i < count; i++) {
           Object[] paramsUsers = {dataFactory.getFirstName(), dataFactory.getLastName(), new java.sql.Date(dataFactory.getBirthDate().getTime())};
           int[] typesUsers = {Types.VARCHAR, Types.VARCHAR, Types.DATE};
-          jdbcTemplate.update("Insert Into users (name, surname, birthdate) Values (?,?,?)", paramsUsers, typesUsers);
+          jdbcTemplate.update("Insert Into user (name, surname, birth) Values (?,?,?)", paramsUsers, typesUsers);
 
           int maxCountFriendRandom = r.nextInt(High-Low) + Low;
           for (int j = 0; j < maxCountFriendRandom ; j++) {
