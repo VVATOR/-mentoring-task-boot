@@ -1,6 +1,7 @@
 package com.epam.mentoring.springboot.repository;
 
 import com.epam.mentoring.springboot.beans.Friendships;
+import com.epam.mentoring.springboot.repository.impl.FriendshipCustomRepository;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 

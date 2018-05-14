@@ -43,7 +43,7 @@
                     <td><input type="text" name="surname" value="${(userForm.surname)!''}" /></td>
                 </tr>
                 <tr>
-                    <td><@spring.message 'label.birthday' /> (mm/dd/yyyy):</td>
+                    <td><@spring.message 'label.birthday' /> (mm.dd.yyyy):</td>
 
                       <td>
                         <#assign createDate = (userForm.birth?date)!''>

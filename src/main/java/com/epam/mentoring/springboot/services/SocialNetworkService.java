@@ -5,7 +5,7 @@ import com.epam.mentoring.springboot.beans.User;
 import java.util.List;
 
 public interface SocialNetworkService {
-
+/*
   List getUsers();
 
   User getUser(final int id);
@@ -20,5 +20,5 @@ public interface SocialNetworkService {
 
   void addUser(final User user);
 
-  void generateUsers(int count);
+  void generateUsers(int count);*/
 }

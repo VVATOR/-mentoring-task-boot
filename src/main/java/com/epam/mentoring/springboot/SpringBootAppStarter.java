@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 //@ComponentScan(value = "com.epam.mentoring.springboot.*")
+//@EnableAutoConfiguration
+//@EnableAdminServer
 public class SpringBootAppStarter {
 
   public static void main(String[] args) {

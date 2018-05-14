@@ -1,6 +1,5 @@
-package com.epam.mentoring.springboot.repository;
+package com.epam.mentoring.springboot.repository.impl;
 
-import com.epam.mentoring.springboot.services.SocialNetworkService;
 import java.sql.Types;
 import java.util.Random;
 import javax.annotation.Resource;
