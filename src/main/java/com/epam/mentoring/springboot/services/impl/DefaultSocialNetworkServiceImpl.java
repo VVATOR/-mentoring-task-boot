@@ -27,15 +27,15 @@ public class DefaultSocialNetworkServiceImpl implements SocialNetworkService {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private static final RowMapper usersRowMapper = (rs, rowNumber) -> new User(
-            rs.getLong("id"),
+            rs.getInt("id"),
             rs.getString("name"),
             rs.getString("surname"),
             rs.getDate("birth")
     );
 
     private static final RowMapper friendshipsRowMapper = (rs, rowNumber) -> new Friendships(
-            rs.getLong("userid1"),
-            rs.getLong("userid2"),
+            rs.getInt("userid1"),
+            rs.getInt("userid2"),
             rs.getTimestamp("timestamp")
     );
 

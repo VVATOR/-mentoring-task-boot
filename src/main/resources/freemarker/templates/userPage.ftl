@@ -31,25 +31,30 @@
         </#if>
 
         <form action="${action}" method="post">
-            <@spring.bind "userForm"/>
-            <input type="hidden" name="id" />
+          <@spring.bind "userForm" />
+            <input type="hidden" name="id" value="${(userForm.id)!0}"/>
             <table border="0">
                 <tr>
                     <td><@spring.message 'label.name' /></td>
-                    <td><@spring.formInput 'name' /></td>
+                    <td><input type="text" name="name" value="${(userForm.name)!''}" /></td>
                 </tr>
                 <tr>
                     <td><@spring.message 'label.surname' /></td>
-                    <td><@spring.formInput 'surname' /></td>
+                    <td><input type="text" name="surname" value="${(userForm.surname)!''}" /></td>
                 </tr>
                 <tr>
                     <td><@spring.message 'label.birthday' /> (mm/dd/yyyy):</td>
-                      <td><@spring.formInput 'birth' /></td>
+
+                      <td>
+                        <#assign createDate = (userForm.birth?date)!''>
+                        <input type="text" name="birth" value="${createDate}" /></td>
                 </tr>
                 <tr>
-                    <td colspan="2" align="center"><input type="submit" value="Submit" /></td>
+                    <td colspan="2" align="center">
+                      <input type="submit" value="Submit" /></td>
                 </tr>
             </table>
+
         </form>
         </div>
    </body>

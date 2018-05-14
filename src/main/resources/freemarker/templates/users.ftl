@@ -10,8 +10,10 @@
         <title><@spring.message 'label.users' /></title>
     </head>
     <body>
-    <#assign i = users?size>
-    Count users: ${i}
+    <#if users??>
+        <#assign i = users?size>
+        Count users: ${i}
+
         <table>
             <thead>
                 <tr>
@@ -34,6 +36,7 @@
                 </#list>
             </tbody>
         </table>
+    <#else>not found users</#if>
         <a href="<@spring.url '/users/edit_user'/>"><@spring.message 'label.user_add' /></a>
     </body>
 </html>

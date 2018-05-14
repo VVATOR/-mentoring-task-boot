@@ -11,25 +11,27 @@
     <body>
 
         <h1><@spring.message 'label.friendships' /></h1>
-        <#assign i = friendships?size>
-        Count friendships: ${i}
-        <table>
-            <thead>
-                <tr>
-                    <th><@spring.message 'label.id' /></th>
-                    <th><@spring.message 'label.friend_id' /></th>
-                    <th><@spring.message 'label.time' /></th>
-                </tr>
-            </thead>
-            <tbody>
-                <#list friendships as friendship>
+        <#if friendships??>
+            <#assign i = friendships?size>
+            Count friendships: ${i}
+            <table>
+                <thead>
                     <tr>
-                        <td>${friendship.userId1}</a></td>
-                        <td>${friendship.userId2}</a></td>
-                        <td>${friendship.timestamp}</td>
+                        <th><@spring.message 'label.id' /></th>
+                        <th><@spring.message 'label.friend_id' /></th>
+                        <th><@spring.message 'label.time' /></th>
                     </tr>
-                </#list>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <#list friendships as friendship>
+                        <tr>
+                            <td>${friendship.userId1}</a></td>
+                            <td>${friendship.userId2}</a></td>
+                            <td>${friendship.timestamp}</td>
+                        </tr>
+                    </#list>
+                </tbody>
+            </table>
+        <#else>not found friendships</#if>
     </body>
 </html>

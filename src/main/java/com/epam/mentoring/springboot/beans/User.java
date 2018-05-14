@@ -7,10 +7,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "user")
@@ -18,40 +21,42 @@ public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Integer id;
 
   @NotNull
   @NotBlank
-  @Pattern(regexp = "[a-z-A-Z]*")
+  @Pattern(regexp = "[A-Za-zА-Яа-яЁё0-9]*")
   @Column(name = "name")
   private String name;
 
   @NotNull
   @NotBlank
-  @Pattern(regexp = "[a-z-A-Z]*")
+  @Pattern(regexp = "[A-Za-zА-Яа-яЁё0-9]*")
   @Column(name = "surname")
   private String surname;
 
   @Past
   @NotNull
   @Column(name = "birth")
+  @Temporal(TemporalType.TIMESTAMP)
+  @DateTimeFormat(pattern="dd.MM.yyyy")
   private Date birth;
 
   public User() {
   }
 
-  public User(Long id, String name, String surname, Date birth) {
+  public User(Integer id, String name, String surname, Date birth) {
     this.id = id;
     this.name = name;
     this.surname = surname;
     this.birth = birth;
   }
 
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
