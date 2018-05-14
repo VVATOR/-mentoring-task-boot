@@ -1,7 +1,5 @@
 package com.epam.mentoring.springboot.config;
 
-import com.epam.mentoring.springboot.services.SocialNetworkService;
-import com.epam.mentoring.springboot.services.impl.DefaultSocialNetworkServiceImpl;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import java.beans.PropertyVetoException;
 import javax.sql.DataSource;
@@ -15,7 +13,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -104,11 +101,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     return new NamedParameterJdbcTemplate(dataSource);
   }
 
-  @Bean
+ /* @Bean
   public SocialNetworkService socialNetworkService() {
     return new DefaultSocialNetworkServiceImpl();
   }
-
+*/
   @Bean
   public CookieThemeResolver themeResolver() {
     CookieThemeResolver resolver = new CookieThemeResolver();
